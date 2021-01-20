@@ -4,24 +4,7 @@ const db = require('./config/db.js');
 const session = require("express-session");
 const cors = require('cors');
 const User = require("./models/User.js");
-/*
-let whiteList = [
-    'http://localhost:3000',
-    'http://localhost:4500',
-    'http://localhost:3001'
-];
 
-let corsOption = {
-    origin: (origin, callback) => {
-        if (whiteList.indexOf(origin) !== -1 || !origin){
-            callback(null,true);
-        }else{
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-}
-
-*/
 const register = require('./routes/register');
 const login = require('./routes/login');
 const {
@@ -35,7 +18,7 @@ const {
 db.authenticate().then(() => console.log("successfully connected to database"));
 
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
+
 app.use(cors({
     origin: ["http://localhost:3001"],
     methods: ["GET", "POST"],
