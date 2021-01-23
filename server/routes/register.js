@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User.js");
 const { Op } = require("sequelize");
@@ -29,10 +28,6 @@ router.route("/register")
                 const getUser = await User.findOne({
                     where: {
                         [Op.or]: [{username: username},{email:email}]
-                        // $or:[
-                        //     {username: {$eq: username}},
-                        //     {email: {$eq: email}}
-                        // ]
                     }
                 });
                 if(!getUser){
@@ -52,7 +47,7 @@ router.route("/register")
         }
     });
 
-router.route("/register/:id")
+router.route("/users/:id")
     //search user by id
     .get(async (req,res)=>{
         try {
@@ -66,6 +61,8 @@ router.route("/register/:id")
             res.status(500).json(err);
         }
     })
+
+router.route("/register/:id")
     //edit user
     .put(async (req,res)=>{
         try {
