@@ -10,7 +10,7 @@ const login = require('./routes/login');
 const {
     PORT = 3001, //process.env.PORT || 4500,
     NODE_ENV = 'development',
-    SESS_SECRET = 'ssh! quiet, it is a secret!',
+    SESS_SECRET = 'this is srawungapp secret key',
     SESS_NAME = 'sid',
     SESS_LIFETIME = 1000*60*60*24
 } = process.env;
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
     origin: ["http://localhost:3001"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials:true
 }));
 app.use(session({

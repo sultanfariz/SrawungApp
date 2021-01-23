@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.js");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const { get } = require("./register.js");
@@ -32,10 +31,10 @@ router.route("/login")
                 bcrypt.compare(req.body.password, getUser.password).then(result=>{
                     if(result){
                         req.session.userId = getUser.id;
-                        console.log("berhasil login");
+                        // console.log("berhasil login");
                         return res.status(200).json({message: "Selamat anda berhasil login", username: username});
                     }else{
-                        console.log("gagal login");
+                        // console.log("gagal login");
                         return res.status(401).json({message: "Password salah !"});
                     }
                 });
