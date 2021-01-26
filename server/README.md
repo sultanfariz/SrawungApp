@@ -1,4 +1,4 @@
-## **Show User**
+<!-- ## **Show User**
 
 Returns json data about a single user.
 
@@ -121,4 +121,4 @@ Logout by destroying user session.
 - **Data Params**
   None
 
----
+--- -->

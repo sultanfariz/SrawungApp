@@ -7,6 +7,12 @@ const { get } = require("./register.js");
 
 router.use(express.urlencoded({extended:true}));
 
+const redirectLogin = (req,res,next)=>{
+    if(!req.session.userId){
+        res.redirect('/login');
+    }else next();
+}
+
 router.route("/login")
     //get user's login status
     .get(async (req,res)=>{
@@ -53,3 +59,59 @@ router.post("/logout", async (req,res)=>{
 })
 
 module.exports = router;
+
+
+
+/**
+ * @title Login
+ *
+ * @desc Login with existed credentials.
+ *
+ * @method POST
+ *
+ * @url /login/
+ * @data username
+ * @data password
+ *
+ * @success-code 200
+ * @success-content
+ * {
+ *  "newUser": {
+ *      "id": 1,
+ *      "username": "example",
+ *      "email": "example@gmail.com",
+ *      "namalengkap": "nama",
+ *      "password": "$2a$10$VjflGRM6eUmKB/HumI4IyeAefqKHGk4pJDn.588pZY87g5o4W4Kfu",
+ *      "updatedAt": "2021-01-23T09:05:36.938Z",
+ *      "createdAt": "2021-01-23T09:05:36.938Z"
+ *      },
+ *  "message": "User successfully inserted!"
+ * }
+ *
+ * @note This is still in development.
+ *
+ * 
+ * @title Logout
+ *
+ * @desc Logout by destroying user session.
+ *
+ * @method POST
+ *
+ * @url /logout/
+ * @data none
+ *
+ * @success-code 200
+ * @success-content
+ * {
+ *   "id": 1,
+ *   "username": "example",
+ *   "email": "example@gmail.com",
+ *   "namalengkap": "nama",
+ *   "password": "$2a$10$VjflGRM6eUmKB/HumI4IyeAefqKHGk4pJDn.588pZY87g5o4W4Kfu",
+ *   "updatedAt": "2021-01-23T09:05:36.938Z",
+ *   "createdAt": "2021-01-23T09:05:36.938Z"
+ * }
+ *
+ * @note This is still in development.
+ *
+ */

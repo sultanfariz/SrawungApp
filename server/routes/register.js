@@ -66,15 +66,15 @@ router.route("/register/:id")
     //edit user
     .put(async (req,res)=>{
         try {
-            const {username, email, password} = req.body;
+            const {username, email, namalengkap, password} = req.body;
             const id = req.params.id;
             
             bcrypt.hash(req.body.password, 10).then(async (hash)=>{
                 const editUser = await User.update({
-                    username, email, password:hash
+                    username, email, namalengkap, password:hash
                 },{where: {id:id}});
                 await editUser; 
-                return res.json('User successfully edited!');
+                return res.json({editUser:{id, username, email, namalengkap, password:hash}, message:'User successfully edited!'});
             })
 
         } catch (err) {
@@ -98,3 +98,105 @@ router.route("/register/:id")
     });
 
 module.exports = router;
+
+
+/**
+ * @title Register
+ *
+ * @desc Register new user.
+ *
+ * @method POST
+ *
+ * @url /register/
+ * @data username
+ * @data email
+ * @data namalengkap
+ * @data password
+ *
+ * @success-code 200
+ * @success-content
+ * {
+ *  "newUser": {
+ *      "id": 1,
+ *      "username": "example",
+ *      "email": "example@gmail.com",
+ *      "namalengkap": "nama",
+ *      "password": "$2a$10$VjflGRM6eUmKB/HumI4IyeAefqKHGk4pJDn.588pZY87g5o4W4Kfu",
+ *      "updatedAt": "2021-01-23T09:05:36.938Z",
+ *      "createdAt": "2021-01-23T09:05:36.938Z"
+ *      },
+ *  "message": "User successfully inserted!"
+ * }
+ *
+ * @note This is still in development.
+ *
+ * 
+ * @title Show User
+ *
+ * @desc Returns json data about a single user.
+ *
+ * @method GET
+ *
+ * @url /users/:id
+ * @data none
+ *
+ * @success-code 200
+ * @success-content
+ * {
+ *   "id": 1,
+ *   "username": "example",
+ *   "email": "example@gmail.com",
+ *   "namalengkap": "nama",
+ *   "password": "$2a$10$VjflGRM6eUmKB/HumI4IyeAefqKHGk4pJDn.588pZY87g5o4W4Kfu",
+ *   "updatedAt": "2021-01-23T09:05:36.938Z",
+ *   "createdAt": "2021-01-23T09:05:36.938Z"
+ * }
+ *
+ * @note This is still in development.
+ *
+ * 
+ * @title Edit User
+ *
+ * @desc Edit existed user data.
+ *
+ * @method PUT
+ *
+ * @url /register/:id
+ * @data username
+ * @data email
+ * @data namalengkap
+ * @data password
+ *
+ * @success-code 200
+ * @success-content
+ * {
+ *  "editUser": {
+ *      "id": 1,
+ *      "username": "example",
+ *      "email": "example@gmail.com",
+ *      "namalengkap": "nama",
+ *      "password": "$2a$10$VjflGRM6eUmKB/HumI4IyeAefqKHGk4pJDn.588pZY87g5o4W4Kfu",
+ *      },
+ *  "message": "User successfully edited!"
+ * }
+ *
+ * @note This is still in development.
+ *
+ * 
+ * @title Delete User
+ *
+ * @desc Delete user data permanently.
+ *
+ * @method DELETE
+ *
+ * @url /users/:id
+ * @data none
+ *
+ * @success-code 200
+ * @success-content
+ * {
+ *   "message": "User successfully deleted!"
+ * }
+ *
+ * @note This is still in development.
+ */
