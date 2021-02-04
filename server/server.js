@@ -1,12 +1,11 @@
 const express = require("express");
 const app = express();
-const db = require('./config/db.js');
+const db = require('./config/db');
 const session = require("express-session");
 const cors = require('cors');
-const User = require("./models/User.js");
+const User = require("./models/User");
 
-const register = require('./routes/register');
-const login = require('./routes/login');
+const user = require('./routes/user');
 const {
     PORT = 3001, //process.env.PORT || 4500,
     NODE_ENV = 'development',
@@ -35,8 +34,7 @@ app.use(session({
         secure: true
     }
 }));
-app.use(register);
-app.use(login);
+app.use(user);
 app.use(async (req, res, next)=>{
     const {userId} = req.session;
     if(userId){
